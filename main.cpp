@@ -642,18 +642,89 @@ char * Judet::get_numePerfect() {
     return this->numePrefect;
 }
 int main() {
-    Localitate **l;
-    l=new Localitate*[20];
-    //const char *denumire, int cod, long nr_locuitori,const char *nume, int nrSpitale
-    Oras o("Campulung", 1, 12, "Lasconi", 7);
-    //const char *denumire, int cod, long nr_locuitori,const char *nume, int nrSpitale, const char *numePresedinte
-    ResedintaDeJudet r("Pitesti", 2, 18, "Popa", 9, "Taroiu");
-    Localitate loc;
-    for(int i = 0;i < 2;++i){
-        cin>>loc;
-        *(l[i])=(loc);
+//     Localitate **l;
+//     l=new Localitate*[20];
+//     //const char *denumire, int cod, long nr_locuitori,const char *nume, int nrSpitale
+//     Oras o("Campulung", 1, 12, "Lasconi", 7);
+//     //const char *denumire, int cod, long nr_locuitori,const char *nume, int nrSpitale, const char *numePresedinte
+//     ResedintaDeJudet r("Pitesti", 2, 18, "Popa", 9, "Taroiu");
+//     Localitate loc;
+//     for(int i = 0;i < 2;++i){
+//         cin>>loc;
+//         *(l[i])=(loc);
+//     }
+//     for(int i=0;i<2;++i)
+//         cout << *l[i]<<'\n';
+ 
+   Localitate **l=new Localitate*[4]; 
+   Oras *o=new Oras("Campulung", 1, 12, "Lasconi", 7);
+   ResedintaDeJudet *r=new ResedintaDeJudet("Pitesti", 2, 18, "Popa", 9, "Taroiu");
+   l[0]=o;
+   l[1]=r;
+  
+   Localitate *loc;
+   for(int i = 2;i < 4;i++){
+         cout<<"Ce vrei sa introduci?(oras/resedinta):";
+         String alegere; //aici trebuie sa te uiti ca nush daca am citit bine ca nu le-am mai folosit in C++ demult
+         cin>>alegere;
+         if(alegere=="oras")
+         {
+           loc=new Oras();
+           cin>>loc;
+         }
+        else
+        {
+          loc=new ResedintaDeJudet();
+          cin>>loc;
+        }
+        l[i]=loc;
     }
-    for(int i=0;i<2;++i)
+    for(int i=0;i<4;i++)
         cout << *l[i]<<'\n';
     return 0;
 }
+/*
+class Localitate{
+public:
+    int x;
+    Localitate(){ x=0;}
+    virtual ~Localitate(){}
+};
+class Oras :public Localitate{
+public:
+    int y;
+    Oras(){y=2;}
+};
+class ResedintaDeJudet : public Oras{
+public:
+    int z;
+    ResedintaDeJudet(){z=3;}
+    
+};
+
+int main()
+{
+    
+    Localitate **l=new Localitate*[2]; 
+    Oras *o=new Oras();
+    ResedintaDeJudet *r=new ResedintaDeJudet();
+    l[0]=o;
+    l[1]=r;
+    
+    cout<<(*l[0]).x<<endl; //Afiseaza: 0
+    // cout<<(*l[1]).z; //EROARE pt ca l[1] e de tip Localitate si localitate n-are niciun z 
+    
+    //verificare daca se poate realiza downcasting 
+    //ca sa pot accseza z din l[i] fac downcasting
+    if(dynamic_cast<ResedintaDeJudet*>(l[1]))
+        cout<<"da, asta e downcasting\n"; //Afiseaza: da, asta e downcasting
+    else
+        cout<<"nu, nu se poate realiza downcastign\n"; //in if ai valoare NULL
+    
+   //Nu uita ca r e declarat mai sus ca fiind pointer catre o resedinta de judet
+   r=dynamic_cast<ResedintaDeJudet*>(l[1]);
+   cout<<(*r).z;//Afiseaza 3 => deci l-a accesat cu succes pe z
+   //BAFTA :)
+   return 0;
+}
+*/
